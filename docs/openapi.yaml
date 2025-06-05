@@ -1,0 +1,325 @@
+openapi: 3.0.3
+info:
+  title: Automated Content Optimizer API
+  description: |
+    API for optimizing content for both search engines (SEO) and AI platforms (GEO).
+    
+    ## Features
+    - SEO Optimization
+    - GEO (Generative Engine Optimization)
+    - Combined Optimization
+    - Content Analysis
+    - Performance Tracking
+    
+    ## Authentication
+    This API uses JWT Bearer tokens for authentication. You can obtain a token by calling the `/token` endpoint.
+    
+    ## Rate Limiting
+    Rate limits vary by subscription plan:
+    - Free: 60 requests/minute
+    - Pro: 300 requests/minute
+    - Agency: 1000 requests/minute
+  version: 1.0.0
+  contact:
+    name: Content Optimizer Team
+    email: support@contentoptimizer.ai
+    url: https://contentoptimizer.ai
+
+servers:
+  - url: https://api.contentoptimizer.ai/v1
+    description: Production server
+  - url: http://localhost:8000
+    description: Local development
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error message
+      required:
+        - detail
+
+    OptimizationRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Content to optimize
+        content_type:
+          type: string
+          enum: [text, url, file]
+          default: text
+        language:
+          type: string
+          default: en
+      required:
+        - content
+
+    SEOOptimizationRequest:
+      allOf:
+        - $ref: '#/components/schemas/OptimizationRequest'
+        - type: object
+          properties:
+            target_keywords:
+              type: array
+              items:
+                type: string
+            min_word_count:
+              type: integer
+              default: 300
+            max_keyword_density:
+              type: number
+              default: 0.03
+            optimization_goals:
+              type: array
+              items:
+                type: string
+                enum:
+                  - keyword_optimization
+                  - technical_seo
+                  - content_structure
+
+    GEOOptimizationRequest:
+      allOf:
+        - $ref: '#/components/schemas/OptimizationRequest'
+        - type: object
+          properties:
+            target_platforms:
+              type: array
+              items:
+                type: string
+                enum:
+                  - chatgpt
+                  - claude
+                  - voice
+            optimization_goals:
+              type: array
+              items:
+                type: string
+                enum:
+                  - context
+                  - factual
+                  - voice_search
+
+    OptimizationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        original_content:
+          type: string
+        optimized_content:
+          type: string
+        seo_metrics:
+          type: object
+          properties:
+            score:
+              type: number
+            suggestions:
+              type: array
+              items:
+                type: string
+        geo_metrics:
+          type: object
+          properties:
+            score:
+              type: number
+            suggestions:
+              type: array
+              items:
+                type: string
+        combined_score:
+          type: number
+        processing_time:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - request_id
+        - original_content
+        - optimized_content
+        - combined_score
+
+paths:
+  /optimize/seo:
+    post:
+      summary: Optimize content for search engines
+      description: |
+        Analyzes and optimizes content for better search engine performance.
+        Requires Pro or Agency subscription.
+      tags:
+        - optimization
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SEOOptimizationRequest'
+      responses:
+        '200':
+          description: Optimization successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptimizationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Requires Pro or Agency subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /optimize/geo:
+    post:
+      summary: Optimize content for AI platforms
+      description: |
+        Analyzes and optimizes content for better performance on AI platforms.
+        Requires Pro or Agency subscription.
+      tags:
+        - optimization
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GEOOptimizationRequest'
+      responses:
+        '200':
+          description: Optimization successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptimizationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Requires Pro or Agency subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /optimize/combined:
+    post:
+      summary: Perform both SEO and GEO optimization
+      description: |
+        Optimizes content for both search engines and AI platforms.
+        Requires Pro or Agency subscription.
+      tags:
+        - optimization
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                content_type:
+                  type: string
+                  enum: [text, url, file]
+                seo_settings:
+                  $ref: '#/components/schemas/SEOOptimizationRequest'
+                geo_settings:
+                  $ref: '#/components/schemas/GEOOptimizationRequest'
+              required:
+                - content
+                - seo_settings
+                - geo_settings
+      responses:
+        '200':
+          description: Optimization successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptimizationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Requires Pro or Agency subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /optimize/history:
+    get:
+      summary: Get optimization history
+      description: Retrieve user's optimization history
+      tags:
+        - history
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+      parameters:
+        - name: skip
+          in: query
+          description: Number of records to skip
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: Maximum number of records to return
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: History retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_optimizations:
+                    type: integer
+                  optimizations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OptimizationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
