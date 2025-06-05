@@ -166,19 +166,15 @@ pytest
 
 ## Support
 
-- 📧 Email: support@contentoptimizer.ai
-- 💬 Discord: [Join our community](https://discord.gg/contentoptimizer)
-- 📚 Documentation: [docs.contentoptimizer.ai](https://docs.contentoptimizer.ai)
+- 📧 Email: support
+- 💬 Discord: [Join
+- 📚 Documentation: [
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
 
-- OpenAI for GPT-4 API
-- Anthropic for Claude API
-- The amazing open-source community
 
 ---
 
