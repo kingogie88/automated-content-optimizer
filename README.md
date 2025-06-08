@@ -1,5 +1,7 @@
 # 🚀 Automated Content Optimizer
 
+![CI/CD Status](https://github.com/kingogie88/automated-content-optimizer/workflows/CI%2FCD%20Pipeline/badge.svg)
+
 ## Problem Statement
 Current content optimization tools focus only on traditional SEO, missing the growing importance of AI-powered search engines and voice assistants. The Automated Content Optimizer bridges this gap by providing a comprehensive solution that optimizes content for both traditional search engines and next-generation AI platforms.
 
@@ -166,20 +168,16 @@ pytest
 
 ## Support
 
-- 📧 Email: support@contentoptimizer.ai
-- 💬 Discord: [Join our community](https://discord.gg/contentoptimizer)
-- 📚 Documentation: [docs.contentoptimizer.ai](https://docs.contentoptimizer.ai)
+- 📧 Email: support
+- 💬 Discord: [Join
+- 📚 Documentation: [
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
 
-- OpenAI for GPT-4 API
-- Anthropic for Claude API
-- The amazing open-source community
 
 ---
 
-Built with ❤️ by the Content Optimizer Team# Test commit
+Built with ❤️ by the Content Optimizer Team
