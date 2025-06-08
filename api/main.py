@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, HTTPBearer, HTTPAuthorizationCredentials
 from typing import List, Optional
 from datetime import datetime, timedelta
 import os
@@ -141,6 +141,25 @@ async def health_check():
         "status": "healthy",
         "timestamp": datetime.now(),
         "version": "1.0.0"
+    }
+
+@app.get("/docs")
+async def get_docs():
+    return app.openapi()
+
+@app.post("/api/v1/optimize")
+async def optimize_content(
+    credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
+    content: str = None,
+    optimization_type: str = None
+):
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    # This is just for testing - actual implementation would validate the token
+    return {
+        "status": "success",
+        "message": "Content optimization request received"
     }
 
 if __name__ == "__main__":
