@@ -21,43 +21,53 @@ wheels/
 *.egg
 
 # Virtual Environment
-venv/
-env/
-ENV/
 .env
+.venv
+env/
+venv/
+ENV/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-.DS_Store
 
-# Testing
+# Logs and databases
+*.log
+*.sqlite
+logs/
+*.db
+
+# Test coverage
 .coverage
 htmlcov/
-.pytest_cache/
 .tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 
-# Project specific
-*.db
-*.sqlite3
-logs/
+# Media files
+*.mp4
+*.wav
+*.mp3
+*.avi
 temp/
 uploads/
-downloads/
-.streamlit/secrets.toml
-api_keys.json
 
-# Documentation
-site/
-docs/_build/
+# NLTK Data
+nltk_data/
 
-# Jupyter Notebooks
-.ipynb_checkpoints
-*.ipynb
+# Hugging Face specific
+.huggingface/
+wandb/
+runs/
 
-# Distribution
-dist/
-build/
-*.egg-info/ 
+# OS specific
+.DS_Store
+Thumbs.db

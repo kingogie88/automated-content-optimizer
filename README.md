@@ -1,65 +1,34 @@
-# 🚀 Automated Content Optimizer
+# Automated Content Optimizer 🚀
 
-![CI/CD Status](https://github.com/kingogie88/automated-content-optimizer/workflows/CI%2FCD%20Pipeline/badge.svg)
-
-## Problem Statement
-Current content optimization tools focus only on traditional SEO, missing the growing importance of AI-powered search engines and voice assistants. The Automated Content Optimizer bridges this gap by providing a comprehensive solution that optimizes content for both traditional search engines and next-generation AI platforms.
-
-## Business Value
-- 🎯 40% improvement in search visibility
-- 🤖 60% better AI engine performance
-- ⚡ 3x faster optimization process
-- 📊 Professional reports for client delivery
+A multi-modal content optimization system that processes and enhances text, images, audio, and video content.
 
 ## Features
 
-### 1. SEO Optimization Engine
-- Comprehensive keyword analysis with density and LSI metrics
-- Technical SEO optimization with meta tags and schema markup
-- Content structure analysis and readability scoring
-- Internal/external link optimization
-- Performance impact analysis
+- **Multi-Modal Processing**
+  - Text optimization and analysis
+  - Image processing and enhancement
+  - Audio processing and segmentation
+  - Video processing and key frame extraction
 
-### 2. GEO (Generative Engine Optimization)
-- AI-specific content optimization for ChatGPT, Claude, and Gemini
-- Voice search optimization for natural language queries
-- Featured snippet optimization
-- Context clarity enhancement
-- Factual accuracy verification
+- **Advanced Capabilities**
+  - Content type detection
+  - Structured data processing
+  - Hardware-aware optimization
+  - Comprehensive error handling
+  - Performance monitoring
 
-### 3. Content Processing
-- Support for multiple formats (Text, HTML, Markdown, PDF, DOCX)
-- URL content scraping and analysis
-- Batch processing capabilities
-- Version control for optimization iterations
-- Multiple export options
-
-### 4. Analytics & Reporting
-- Detailed before/after comparisons
-- ROI calculation and projections
-- Performance tracking dashboard
-- Competitor benchmarking
-- White-label reporting
-
-## Quick Start
-
-### Prerequisites
-- Python 3.9+
-- Docker (optional)
-- API keys for OpenAI and Anthropic
-
-### Installation
+## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/kingogie88/automated-content-optimizer.git
+git clone https://github.com/yourusername/automated-content-optimizer.git
 cd automated-content-optimizer
 ```
 
 2. Create a virtual environment:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -67,90 +36,99 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables:
+4. Download NLTK data:
 ```bash
-cp .env.example .env
-# Edit .env with your API keys and configuration
+python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger'); nltk.download('stopwords')"
 ```
 
-5. Run the application:
+## Usage
+
+1. Start the FastAPI server:
 ```bash
-# Start the FastAPI backend
-uvicorn api.main:app --reload
-
-# In a new terminal, start the Streamlit frontend
-streamlit run app/main.py
+uvicorn src.main:app --reload
 ```
 
-## API Integration
-
-### Basic Usage
-```python
-import requests
-
-api_url = "https://api.contentoptimizer.ai/v1"
-api_key = "your_api_key"
-
-# Optimize content
-response = requests.post(
-    f"{api_url}/optimize/combined",
-    headers={"Authorization": f"Bearer {api_key}"},
-    json={
-        "content": "Your content here",
-        "optimization_type": "full",
-        "target_platforms": ["search", "chatgpt", "voice"]
-    }
-)
-
-results = response.json()
-```
-
-## Pricing Tiers
-
-### 🆓 Free Tier
-- 10 optimizations/month
-- Basic SEO features
-- Standard reports
-
-### 💼 Pro Tier ($29/month)
-- 500 optimizations/month
-- Advanced analytics
-- Priority processing
-- API access
-
-### 🏢 Agency Tier ($99/month)
-- Unlimited optimizations
-- White-labeling
-- Team collaboration
-- Priority support
-- Custom integrations
-
-### 🌐 Enterprise
-- Custom pricing
-- Dedicated support
-- Custom feature development
-- SLA guarantees
+2. Access the API documentation at `http://localhost:8000/docs`
 
 ## Development
 
-### Setting Up Development Environment
-
-1. Install development dependencies:
+1. Run tests:
 ```bash
-pip install -r requirements-dev.txt
+pytest tests/ -v
 ```
 
-2. Set up pre-commit hooks:
+2. Check code style:
 ```bash
-pre-commit install
+black .
+flake8 .
+mypy .
 ```
 
-3. Run tests:
+## Deployment
+
+### GitHub Deployment
+
+1. Create a new repository on GitHub
+2. Push your code:
 ```bash
-pytest
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/yourusername/automated-content-optimizer.git
+git push -u origin main
 ```
 
-### Contributing
+### Hugging Face Deployment
+
+1. Create a new Space on Hugging Face:
+   - Go to huggingface.co
+   - Click on "New Space"
+   - Choose "Gradio" as the SDK
+   - Set up the space with the same name as your GitHub repository
+
+2. Link your GitHub repository:
+   - In your Hugging Face space settings, go to "Repository"
+   - Connect your GitHub repository
+   - Enable automatic syncing
+
+3. The space will automatically update when you push to GitHub
+
+## Project Structure
+
+```
+automated-content-optimizer/
+├── src/
+│   ├── core/
+│   │   ├── processors/
+│   │   │   ├── video_processor.py
+│   │   │   └── audio_processor.py
+│   │   └── content_processor.py
+│   ├── middleware/
+│   │   └── security.py
+│   └── utils/
+│       ├── logging_config.py
+│       └── monitoring.py
+├── tests/
+│   └── test_processors.py
+├── .gitignore
+├── .huggingface/
+│   └── space.yml
+├── requirements.txt
+└── README.md
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+API_KEY=your_api_key
+DEBUG=True
+MAX_WORKERS=4
+```
+
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -158,26 +136,6 @@ pytest
 4. Push to the branch
 5. Create a Pull Request
 
-## Documentation
-
-- [API Documentation](docs/API.md)
-- [User Guide](docs/USER_GUIDE.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Business Guide](docs/BUSINESS_GUIDE.md)
-
-## Support
-
-- 📧 Email: support
-- 💬 Discord: [Join
-- 📚 Documentation: [
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
----
-
-Built with ❤️ by the Content Optimizer Team
+This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
