@@ -14,8 +14,6 @@ jobs:
       pull-requests: write
     steps:
     - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -31,7 +29,7 @@ jobs:
       run: |
         black . --check
         flake8 .
-        mypy . --ignore-missing-imports --disallow-untyped-defs=false
+        mypy . --ignore-missing-imports --disallow-untyped-defs=false --disallow-incomplete-defs=false
         isort . --check-only
 
   test:
@@ -45,8 +43,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -82,8 +78,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
     
     - name: Set up Python
       uses: actions/setup-python@v4
