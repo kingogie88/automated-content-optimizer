@@ -1,3 +1,15 @@
-def test_basic():
+"""Basic test module for the content optimizer."""
+
+from typing import Any
+
+
+def test_basic() -> None:
     """Basic test to ensure pytest is working."""
-    assert True 
+    assert True
+
+
+def test_version() -> None:
+    """Test that version is properly set."""
+    from optimizer import __version__
+    assert isinstance(__version__, str)
+    assert len(__version__.split('.')) == 3 
