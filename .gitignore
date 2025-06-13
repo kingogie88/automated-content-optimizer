@@ -21,43 +21,36 @@ wheels/
 *.egg
 
 # Virtual Environment
-venv/
-env/
-ENV/
 .env
+.venv
+env/
+venv/
+ENV/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-.DS_Store
 
 # Testing
 .coverage
+coverage.xml
 htmlcov/
 .pytest_cache/
-.tox/
-
-# Project specific
-*.db
-*.sqlite3
-logs/
-temp/
-uploads/
-downloads/
-.streamlit/secrets.toml
-api_keys.json
 
 # Documentation
 site/
 docs/_build/
 
-# Jupyter Notebooks
-.ipynb_checkpoints
-*.ipynb
+# OS
+.DS_Store
+Thumbs.db
 
-# Distribution
-dist/
-build/
-*.egg-info/ 
+# Project specific
+*.log
+*.mp4
+*.wav
+*.mp3
+*.pdf
+*.docx

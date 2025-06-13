@@ -1,0 +1,53 @@
+site_name: Automated Content Optimizer
+site_description: A multi-modal content optimization system for search engines and AI platforms
+site_author: kingogie88
+repo_url: https://github.com/kingogie88/automated-content-optimizer
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: deep purple
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist
+  - admonition
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: installation.md
+    - Quick Start: quickstart.md
+  - User Guide:
+    - Video Processing: video-processing.md
+    - Audio Processing: audio-processing.md
+    - Content Optimization: content-optimization.md
+  - API Reference:
+    - Video API: api/video.md
+    - Audio API: api/audio.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append("src")
+          selection:
+            docstring_style: google
+          rendering:
+            show_source: true
+            show_root_heading: true 
