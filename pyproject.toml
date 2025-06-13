@@ -6,6 +6,11 @@ build-backend = "setuptools.build_meta"
 line-length = 100
 target-version = ['py39']
 include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/tests/
+'''
 
 [tool.isort]
 profile = "black"
@@ -34,14 +39,4 @@ minversion = "6.0"
 addopts = "-ra -q"
 testpaths = [
     "tests",
-]
-
-[tool.black]
-line-length = 100
-target-version = ['py39']
-include = '\.pyi?$'
-extend-exclude = '''
-# A regex preceded with ^/ will apply only to files and directories
-# in the root of the project.
-^/tests/
-''' 
+] 
