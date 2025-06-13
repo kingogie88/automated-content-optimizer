@@ -33,41 +33,24 @@ ENV/
 *.swp
 *.swo
 
-# Logs and databases
-*.log
-*.sqlite
-logs/
-*.db
-
-# Test coverage
+# Testing
 .coverage
-htmlcov/
-.tox/
-.nox/
-.coverage.*
-.cache
-nosetests.xml
 coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
+htmlcov/
+.pytest_cache/
 
-# Media files
+# Documentation
+site/
+docs/_build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
 *.mp4
 *.wav
 *.mp3
-*.avi
-temp/
-uploads/
-
-# NLTK Data
-nltk_data/
-
-# Hugging Face specific
-.huggingface/
-wandb/
-runs/
-
-# OS specific
-.DS_Store
-Thumbs.db
+*.pdf
+*.docx
