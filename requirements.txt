@@ -1,20 +1,27 @@
-# Core Dependencies
+# Web Framework
 fastapi>=0.104.0
 uvicorn>=0.24.0
 python-dotenv>=1.0.0
 pydantic>=2.0.0
 
-# AI and NLP
+# Machine Learning
 nltk>=3.8.1
 transformers>=4.30.0
-torch>=2.0.0
-sentence-transformers>=2.2.0
 
-# Data Processing
+# Media Processing
+moviepy>=1.0.3
+librosa>=0.10.0
+pillow>=10.0.0
+
+# UI
+gradio>=3.50.0
+
+# Utilities
 numpy>=1.24.0
 pandas>=2.0.0
-Pillow>=9.5.0
+requests>=2.31.0
 python-multipart>=0.0.6
+tqdm>=4.65.0
 
 # Testing
 pytest>=7.4.0
@@ -33,15 +40,11 @@ PyPDF2>=3.0.1
 
 # Video Processing
 opencv-python>=4.8.0
-moviepy>=1.0.3
 imageio>=2.31.1
 
 # Audio Processing
-librosa>=0.10.0
 soundfile>=0.12.1
 numba>=0.57.1
-tqdm>=4.65.0
 
 # UI and Deployment
-gradio>=4.19.2
 python-magic>=0.4.27  # For file type detection 
