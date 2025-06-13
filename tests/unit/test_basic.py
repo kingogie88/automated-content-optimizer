@@ -12,6 +12,6 @@ def test_basic() -> None:
 
 def test_version() -> None:
     """Test that version is properly set."""
-    version: str = __version__  # type: ignore
+    version = cast(str, __version__)
     assert isinstance(version, str)
     assert len(version.split('.')) == 3 
