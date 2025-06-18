@@ -1,43 +1,55 @@
-# Use Python 3.9 slim image
-FROM python:3.9-slim
+# Build stage
+FROM python:3.11-slim as builder
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libmagic1 \
+    tesseract-ocr \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    software-properties-common \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Copy dependency files
+COPY requirements.txt requirements-dev.txt pyproject.toml ./
 
-# Copy requirements file
-COPY requirements.txt .
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-dev.txt
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Test stage
+FROM builder as test
 
-# Download NLTK data
-RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
+# Copy source code and tests
+COPY src/ ./src/
+COPY tests/ ./tests/
+COPY config/ ./config/
 
-# Copy application code
-COPY . .
+# Create necessary directories
+RUN mkdir -p /app/uploads
 
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 
-# Expose ports for FastAPI and Streamlit
-EXPOSE 8000
-EXPOSE 8501
+# Production stage
+FROM builder as production
 
-# Create entrypoint script
-RUN echo '#!/bin/bash\n\
-uvicorn api.main:app --host 0.0.0.0 --port 8000 & \
-streamlit run app/main.py --server.port 8501 --server.address 0.0.0.0\
-' > /app/entrypoint.sh \
-&& chmod +x /app/entrypoint.sh
+# Copy source code and config
+COPY src/ ./src/
+COPY config/ ./config/
 
-# Set entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"] 
+# Create necessary directories
+RUN mkdir -p /app/uploads
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Expose port
+EXPOSE 7860
+
+# Set up entrypoint
+ENTRYPOINT ["python", "src/main.py"] 

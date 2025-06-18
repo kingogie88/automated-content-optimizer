@@ -1,0 +1,59 @@
+# Core dependencies
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.10.0
+pytest-xdist>=3.3.1
+coverage>=7.3.0
+httpx>=0.25.1
+
+# Basic ML dependencies (compatible versions)
+numpy>=1.21.0,<2.0.0
+scipy>=1.7.0,<1.12.0
+scikit-learn>=1.0.0,<1.4.0
+
+# Text processing
+nltk>=3.8.0
+beautifulsoup4>=4.12.0
+spacy>=3.7.2
+sentence-transformers>=2.2.2
+
+# Knowledge Graph & Schema
+rdflib>=7.0.0
+wikidata>=0.7.0
+wikipedia>=1.4.0
+jsonschema>=4.17.0
+
+# API Clients (for testing)
+praw>=7.7.0
+medium-api>=1.0.0
+
+# File processing
+python-multipart>=0.0.6
+python-magic>=0.4.27
+python-docx>=0.8.11
+PyPDF2>=3.0.1
+
+# Image processing
+pillow>=10.0.0
+opencv-python>=4.8.0
+
+# Audio/Video processing (optional for CI)
+moviepy>=1.0.3
+librosa>=0.10.0
+
+# Development tools
+black>=23.11.0
+flake8>=6.1.0
+mypy>=1.7.0
+isort>=5.12.0
+
+# Security tools
+bandit>=1.7.5
+safety>=2.3.5 

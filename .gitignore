@@ -21,10 +21,11 @@ wheels/
 *.egg
 
 # Virtual Environment
-venv/
-env/
-ENV/
 .env
+.venv
+env/
+venv/
+ENV/
 
 # IDE
 .idea/
@@ -35,29 +36,44 @@ ENV/
 
 # Testing
 .coverage
+coverage.xml
 htmlcov/
 .pytest_cache/
 .tox/
+nosetests.xml
+coverage/
 
-# Project specific
-*.db
-*.sqlite3
+# Logs
 logs/
-temp/
-uploads/
-downloads/
-.streamlit/secrets.toml
-api_keys.json
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Documentation
-site/
-docs/_build/
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Jupyter Notebooks
-.ipynb_checkpoints
-*.ipynb
+# Dependencies
+node_modules/
+jspm_packages/
 
 # Distribution
 dist/
 build/
-*.egg-info/ 
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Project specific
+*.mp4
+*.wav
+*.mp3
+*.pdf
+*.docx

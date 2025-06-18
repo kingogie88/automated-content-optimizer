@@ -1,0 +1,164 @@
+[
+  {
+    "timestamp": "2025-06-16T14:52:10.598544",
+    "cpu_percent": 0.0,
+    "memory_percent": 68.1,
+    "disk_usage_percent": 88.6,
+    "process_threads": 2,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:53:10.601964",
+    "cpu_percent": 8.2,
+    "memory_percent": 68.1,
+    "disk_usage_percent": 89.2,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:54:10.608503",
+    "cpu_percent": 5.6,
+    "memory_percent": 68.1,
+    "disk_usage_percent": 89.6,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:55:10.612562",
+    "cpu_percent": 9.5,
+    "memory_percent": 67.4,
+    "disk_usage_percent": 89.8,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:56:10.614601",
+    "cpu_percent": 7.3,
+    "memory_percent": 67.4,
+    "disk_usage_percent": 90.2,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:57:10.617802",
+    "cpu_percent": 7.2,
+    "memory_percent": 67.3,
+    "disk_usage_percent": 91.0,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:58:10.623491",
+    "cpu_percent": 7.2,
+    "memory_percent": 67.2,
+    "disk_usage_percent": 92.0,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T14:59:10.626850",
+    "cpu_percent": 9.8,
+    "memory_percent": 68.2,
+    "disk_usage_percent": 93.2,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:00:10.630965",
+    "cpu_percent": 19.2,
+    "memory_percent": 68.3,
+    "disk_usage_percent": 88.4,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:01:10.635835",
+    "cpu_percent": 13.1,
+    "memory_percent": 70.1,
+    "disk_usage_percent": 89.5,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:02:10.639752",
+    "cpu_percent": 15.7,
+    "memory_percent": 70.4,
+    "disk_usage_percent": 90.1,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:03:10.644536",
+    "cpu_percent": 17.9,
+    "memory_percent": 73.3,
+    "disk_usage_percent": 91.8,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:04:10.647342",
+    "cpu_percent": 14.8,
+    "memory_percent": 73.9,
+    "disk_usage_percent": 94.1,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:05:10.654706",
+    "cpu_percent": 16.4,
+    "memory_percent": 75.7,
+    "disk_usage_percent": 95.7,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:06:10.664004",
+    "cpu_percent": 12.5,
+    "memory_percent": 74.8,
+    "disk_usage_percent": 98.5,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T15:11:53.431801",
+    "cpu_percent": 5.8,
+    "memory_percent": 74.8,
+    "disk_usage_percent": 99.4,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T16:50:31.810756",
+    "cpu_percent": 7.7,
+    "memory_percent": 73.9,
+    "disk_usage_percent": 99.5,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-16T21:16:58.724968",
+    "cpu_percent": 9.5,
+    "memory_percent": 72.9,
+    "disk_usage_percent": 99.5,
+    "process_threads": 4,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  }
+]
