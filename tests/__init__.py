@@ -1,3 +1,3 @@
 """
-Test package for the Automated Content Optimizer.
+Test package for the automated content optimizer.
 """ 

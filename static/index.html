@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Optimizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Content Optimizer</h1>
+            <p class="text-gray-600">Optimize your content for SEO and AI platforms</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Input Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Input Content</h2>
+                
+                <form id="optimizeForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Upload File</label>
+                        <input type="file" id="fileInput" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Or Enter Text</label>
+                        <textarea id="textInput" rows="6" class="w-full p-2 border rounded"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Target Keywords (comma-separated)</label>
+                        <input type="text" id="keywordsInput" class="w-full p-2 border rounded" placeholder="keyword1, keyword2, keyword3">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Target Platforms</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" value="chatgpt" class="mr-2"> ChatGPT
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="claude" class="mr-2"> Claude
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" value="bard" class="mr-2"> Bard
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+                        Optimize Content
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Optimization Results</h2>
+                
+                <div id="loadingIndicator" class="hidden">
+                    <div class="flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                        <span class="ml-2">Processing...</span>
+                    </div>
+                </div>
+
+                <div id="results" class="space-y-6">
+                    <!-- Content Analysis -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-2">Content Analysis</h3>
+                        <div id="contentAnalysis" class="text-gray-600"></div>
+                    </div>
+
+                    <!-- SEO Optimization -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-2">SEO Optimization</h3>
+                        <div id="seoOptimization" class="text-gray-600"></div>
+                    </div>
+
+                    <!-- GEO Optimization -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">AI Platform Optimization</h3>
+                        <div id="geoOptimization" class="text-gray-600"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

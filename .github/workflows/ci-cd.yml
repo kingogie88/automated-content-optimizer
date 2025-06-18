@@ -7,13 +7,30 @@ on:
     branches: [ main, develop ]
 
 jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    
+    - name: Run security scan
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+
   lint:
+    needs: security
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -29,7 +46,7 @@ jobs:
       run: |
         black . --check
         flake8 .
-        mypy . --ignore-missing-imports --disallow-untyped-defs=false --disallow-incomplete-defs=false
+        mypy src/ tests/ --ignore-missing-imports
         isort . --check-only
 
   test:
@@ -43,6 +60,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -78,6 +97,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
     
     - name: Set up Python
       uses: actions/setup-python@v4

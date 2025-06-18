@@ -32,23 +32,46 @@ ENV/
 .vscode/
 *.swp
 *.swo
+.DS_Store
 
 # Testing
 .coverage
 coverage.xml
 htmlcov/
 .pytest_cache/
+.tox/
+nosetests.xml
+coverage/
 
-# Documentation
-site/
-docs/_build/
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# OS
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Distribution
+dist/
+build/
+
+# Misc
 .DS_Store
-Thumbs.db
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Project specific
-*.log
 *.mp4
 *.wav
 *.mp3

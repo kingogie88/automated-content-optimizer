@@ -1,21 +1,16 @@
-# Automated Content Optimizer 🚀
+# GEO AI Optimizer
 
-A multi-modal content optimization system that processes and enhances text, images, audio, and video content.
+An AI-powered content optimization and distribution platform that helps optimize content for AI assistants and search engines.
 
 ## Features
 
-- **Multi-Modal Processing**
-  - Text optimization and analysis
-  - Image processing and enhancement
-  - Audio processing and segmentation
-  - Video processing and key frame extraction
-
-- **Advanced Capabilities**
-  - Content type detection
-  - Structured data processing
-  - Hardware-aware optimization
-  - Comprehensive error handling
-  - Performance monitoring
+- Content optimization for AI assistants
+- Entity extraction and linking
+- Schema generation
+- Multi-platform content distribution
+- Analytics and insights
+- Error handling and logging
+- Comprehensive testing suite
 
 ## Installation
 
@@ -25,7 +20,7 @@ git clone https://github.com/yourusername/automated-content-optimizer.git
 cd automated-content-optimizer
 ```
 
-2. Create a virtual environment:
+2. Create and activate a virtual environment:
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
@@ -34,98 +29,44 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
-```
-
-4. Download NLTK data:
-```bash
-python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger'); nltk.download('stopwords')"
+python -m spacy download en_core_web_sm
 ```
 
 ## Usage
 
-1. Start the FastAPI server:
+1. Start the server:
 ```bash
 uvicorn src.main:app --reload
 ```
 
-2. Access the API documentation at `http://localhost:8000/docs`
+2. Access the API documentation:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## Testing
+
+Run the test suite:
+```bash
+pytest tests/ --cov=src
+```
 
 ## Development
 
-1. Run tests:
+1. Install development dependencies:
 ```bash
-pytest tests/ -v
+pip install -r requirements-dev.txt
 ```
 
-2. Check code style:
+2. Set up pre-commit hooks:
+```bash
+pre-commit install
+```
+
+3. Run code quality checks:
 ```bash
 black .
 flake8 .
-mypy .
-```
-
-## Deployment
-
-### GitHub Deployment
-
-1. Create a new repository on GitHub
-2. Push your code:
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/yourusername/automated-content-optimizer.git
-git push -u origin main
-```
-
-### Hugging Face Deployment
-
-1. Create a new Space on Hugging Face:
-   - Go to huggingface.co
-   - Click on "New Space"
-   - Choose "Gradio" as the SDK
-   - Set up the space with the same name as your GitHub repository
-
-2. Link your GitHub repository:
-   - In your Hugging Face space settings, go to "Repository"
-   - Connect your GitHub repository
-   - Enable automatic syncing
-
-3. The space will automatically update when you push to GitHub
-
-## Project Structure
-
-```
-automated-content-optimizer/
-├── src/
-│   ├── core/
-│   │   ├── processors/
-│   │   │   ├── video_processor.py
-│   │   │   └── audio_processor.py
-│   │   └── content_processor.py
-│   ├── middleware/
-│   │   └── security.py
-│   └── utils/
-│       ├── logging_config.py
-│       └── monitoring.py
-├── tests/
-│   └── test_processors.py
-├── .gitignore
-├── .huggingface/
-│   └── space.yml
-├── requirements.txt
-└── README.md
-```
-
-## Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-API_KEY=your_api_key
-DEBUG=True
-MAX_WORKERS=4
+mypy src/
 ```
 
 ## Contributing
@@ -138,4 +79,12 @@ MAX_WORKERS=4
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- FastAPI
+- spaCy
+- Transformers
+- Sentence Transformers
+- And all other open-source libraries used in this project

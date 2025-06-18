@@ -1,29 +1,48 @@
-# Use Python 3.11 slim image as base
-FROM python:3.11-slim
+# Build stage
+FROM python:3.11-slim as builder
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libmagic1 \
+    tesseract-ocr \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Copy dependency files
+COPY requirements.txt requirements-dev.txt pyproject.toml ./
 
-# Copy requirements first for better caching
-COPY requirements.txt .
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-dev.txt
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Test stage
+FROM builder as test
 
-# Download spaCy model
-RUN python -m spacy download en_core_web_sm
-
-# Copy application code
-COPY . .
+# Copy source code and tests
+COPY src/ ./src/
+COPY tests/ ./tests/
+COPY config/ ./config/
 
 # Create necessary directories
-RUN mkdir -p /app/data/uploads
+RUN mkdir -p /app/uploads
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Production stage
+FROM builder as production
+
+# Copy source code and config
+COPY src/ ./src/
+COPY config/ ./config/
+
+# Create necessary directories
+RUN mkdir -p /app/uploads
 
 # Set environment variables
 ENV PYTHONPATH=/app
@@ -33,4 +52,4 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 7860
 
 # Set up entrypoint
-ENTRYPOINT ["python", "app.py"] 
+ENTRYPOINT ["python", "src/main.py"] 

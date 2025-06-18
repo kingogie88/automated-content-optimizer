@@ -16,8 +16,8 @@ from api.models.content import (
     URLContent,
     FileContent
 )
-from core.seo.optimizer import SEOOptimizer
-from core.geo.optimizer import GEOOptimizer
+from core.seo.seo_optimizer import SEOOptimizer
+from core.geo.geo_optimizer import GEOOptimizer
 from database.models import Optimization, OptimizationSuggestion, User
 
 router = APIRouter(

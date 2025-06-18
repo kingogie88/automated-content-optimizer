@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2025-06-15T16:42:45.238673",
+    "cpu_percent": 0.0,
+    "memory_percent": 72.2,
+    "disk_usage_percent": 75.4,
+    "process_threads": 2,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:43:45.242215",
+    "cpu_percent": 9.8,
+    "memory_percent": 72.5,
+    "disk_usage_percent": 75.7,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:44:45.248412",
+    "cpu_percent": 6.5,
+    "memory_percent": 72.2,
+    "disk_usage_percent": 76.1,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:45:45.254493",
+    "cpu_percent": 6.4,
+    "memory_percent": 72.3,
+    "disk_usage_percent": 76.6,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:46:45.256425",
+    "cpu_percent": 6.7,
+    "memory_percent": 72.3,
+    "disk_usage_percent": 77.0,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:47:45.264414",
+    "cpu_percent": 6.6,
+    "memory_percent": 72.3,
+    "disk_usage_percent": 77.4,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:48:45.269082",
+    "cpu_percent": 6.8,
+    "memory_percent": 72.3,
+    "disk_usage_percent": 77.9,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T16:49:45.277436",
+    "cpu_percent": 6.5,
+    "memory_percent": 72.3,
+    "disk_usage_percent": 78.3,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T18:55:24.710818",
+    "cpu_percent": 12.6,
+    "memory_percent": 70.2,
+    "disk_usage_percent": 78.5,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  },
+  {
+    "timestamp": "2025-06-15T19:50:59.862104",
+    "cpu_percent": 6.7,
+    "memory_percent": 70.4,
+    "disk_usage_percent": 78.7,
+    "process_threads": 3,
+    "active_requests": 0,
+    "response_time_ms": 0.0
+  }
+]

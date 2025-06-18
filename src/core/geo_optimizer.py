@@ -3,6 +3,8 @@ from dataclasses import dataclass
 import spacy
 from sentence_transformers import SentenceTransformer
 from transformers import pipeline
+import re
+import numpy as np
 
 @dataclass
 class OptimizationResult:
@@ -18,10 +20,22 @@ class GEOOptimizer:
     """
     
     def __init__(self):
-        # Initialize NLP models
-        self.nlp = spacy.load("en_core_web_sm")
-        self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
-        self.qa_generator = pipeline("question-answering")
+        """Initialize the GEO optimizer with required models"""
+        # Load spaCy model for NLP tasks
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+        except OSError:
+            spacy.cli.download("en_core_web_sm")
+            self.nlp = spacy.load("en_core_web_sm")
+        
+        # Initialize sentence transformer for semantic analysis
+        self.transformer = SentenceTransformer('all-MiniLM-L6-v2')
+        
+        # Initialize zero-shot classification pipeline
+        self.classifier = pipeline(
+            "zero-shot-classification",
+            model="facebook/bart-large-mnli"
+        )
         
     def optimize_for_ai_assistants(
         self, 
@@ -158,13 +172,13 @@ class GEOOptimizer:
     ) -> float:
         """Calculate confidence score for the optimization."""
         # Encode original and optimized content
-        original_embedding = self.sentence_transformer.encode(original_content)
-        optimized_embedding = self.sentence_transformer.encode(optimized_content)
+        original_embedding = self.transformer.encode(original_content)
+        optimized_embedding = self.transformer.encode(optimized_content)
         
         # Calculate semantic similarity with target queries
         query_scores = []
         for query in target_queries:
-            query_embedding = self.sentence_transformer.encode(query)
+            query_embedding = self.transformer.encode(query)
             original_score = self._cosine_similarity(original_embedding, query_embedding)
             optimized_score = self._cosine_similarity(optimized_embedding, query_embedding)
             improvement = optimized_score - original_score
@@ -205,7 +219,6 @@ class GEOOptimizer:
     
     def _cosine_similarity(self, v1, v2) -> float:
         """Calculate cosine similarity between two vectors."""
-        import numpy as np
         return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
     
     def _enhance_entity_mention(self, content: str, entity_info: Dict) -> str:
@@ -343,4 +356,308 @@ class GEOOptimizer:
             else:
                 enhanced.append(para)
                 
-        return '\n\n'.join(enhanced) 
+        return '\n\n'.join(enhanced)
+    
+    def optimize_content(
+        self,
+        content: str,
+        target_platforms: List[str],
+        optimization_goals: Optional[List[str]] = None
+    ) -> Dict:
+        """
+        Optimize content for AI platforms
+        
+        Args:
+            content: The content to optimize
+            target_platforms: List of target platforms (e.g., ['chatgpt', 'claude', 'voice'])
+            optimization_goals: List of optimization goals (e.g., ['context', 'factual', 'voice_search'])
+            
+        Returns:
+            Dict containing optimization results and suggestions
+        """
+        if not content:
+            raise ValueError("Content cannot be empty")
+        
+        if not target_platforms:
+            raise ValueError("At least one target platform must be specified")
+        
+        # Initialize results
+        results = {
+            "original_content": content,
+            "optimized_content": content,
+            "metrics": {},
+            "suggestions": [],
+            "score": 0
+        }
+        
+        # Analyze context clarity
+        context_metrics = self._analyze_context_clarity(content)
+        results["metrics"]["context_clarity"] = context_metrics
+        
+        # Analyze factual consistency
+        factual_metrics = self._analyze_factual_consistency(content)
+        results["metrics"]["factual_consistency"] = factual_metrics
+        
+        # Platform-specific optimization
+        platform_metrics = {}
+        for platform in target_platforms:
+            platform_metrics[platform] = self._optimize_for_platform(content, platform)
+        results["metrics"]["platform_metrics"] = platform_metrics
+        
+        # Voice search optimization if requested
+        if optimization_goals and "voice_search" in optimization_goals:
+            voice_metrics = self._optimize_for_voice_search(content)
+            results["metrics"]["voice_search"] = voice_metrics
+        
+        # Calculate overall score
+        results["score"] = self._calculate_score(results["metrics"])
+        
+        # Generate optimization suggestions
+        results["suggestions"] = self._generate_suggestions(results["metrics"])
+        
+        # Apply optimizations
+        results["optimized_content"] = self._apply_optimizations(
+            content,
+            results["suggestions"],
+            target_platforms
+        )
+        
+        return results
+    
+    def _analyze_context_clarity(self, content: str) -> Dict:
+        """Analyze content clarity and context"""
+        doc = self.nlp(content)
+        sentences = list(doc.sents)
+        
+        # Calculate metrics
+        metrics = {
+            "sentence_count": len(sentences),
+            "avg_sentence_length": np.mean([len(s) for s in sentences]) if sentences else 0,
+            "unique_entities": len(set([ent.text for ent in doc.ents])),
+            "complex_sentence_ratio": sum(1 for s in sentences if len(s) > 20) / len(sentences) if sentences else 0,
+            "transition_density": len(re.findall(r'\b(however|therefore|moreover|furthermore|consequently)\b', content.lower())) / len(sentences) if sentences else 0
+        }
+        
+        return metrics
+    
+    def _analyze_factual_consistency(self, content: str) -> Dict:
+        """Analyze factual consistency and verifiability"""
+        doc = self.nlp(content)
+        
+        # Identify potential factual statements
+        factual_statements = []
+        for sent in doc.sents:
+            if any(token.dep_ in ['nsubj', 'nsubjpass'] for token in sent):
+                factual_statements.append(sent.text)
+        
+        # Analyze statements
+        metrics = {
+            "citation_count": len(re.findall(r'\[\d+\]|\(\d{4}\)', content)),
+            "verifiable_statements": len(factual_statements),
+            "statement_confidence": self._calculate_statement_confidence(factual_statements)
+        }
+        
+        return metrics
+    
+    def _optimize_for_platform(self, content: str, platform: str) -> Dict:
+        """Optimize content for specific AI platform"""
+        if platform == "chatgpt":
+            return self._optimize_for_chatgpt(content)
+        elif platform == "claude":
+            return self._optimize_for_claude(content)
+        elif platform == "voice":
+            return self._optimize_for_voice_search(content)
+        else:
+            raise ValueError(f"Unsupported platform: {platform}")
+    
+    def _optimize_for_chatgpt(self, content: str) -> Dict:
+        """Optimize content for ChatGPT"""
+        # Analyze content structure and clarity
+        doc = self.nlp(content)
+        sentences = list(doc.sents)
+        
+        metrics = {
+            "structure_score": self._calculate_structure_score(sentences),
+            "clarity_score": self._calculate_clarity_score(sentences),
+            "context_score": self._calculate_context_score(content)
+        }
+        
+        return metrics
+    
+    def _optimize_for_claude(self, content: str) -> Dict:
+        """Optimize content for Claude"""
+        # Analyze content for Claude-specific metrics
+        doc = self.nlp(content)
+        
+        metrics = {
+            "platform_score": self._calculate_platform_score(doc),
+            "suggestions": self._generate_platform_suggestions(doc)
+        }
+        
+        return metrics
+    
+    def _optimize_for_voice_search(self, content: str) -> Dict:
+        """Optimize content for voice search"""
+        # Analyze content for voice search optimization
+        doc = self.nlp(content)
+        
+        metrics = {
+            "question_count": len(re.findall(r'\?', content)),
+            "conversational_phrases": len(re.findall(r'\b(how|what|when|where|why|who)\b', content.lower())),
+            "natural_language_score": self._calculate_natural_language_score(doc)
+        }
+        
+        return metrics
+    
+    def _calculate_statement_confidence(self, statements: List[str]) -> float:
+        """Calculate confidence score for factual statements"""
+        if not statements:
+            return 0.0
+        
+        # Use zero-shot classification to assess statement confidence
+        confidence_scores = []
+        for statement in statements:
+            result = self.classifier(
+                statement,
+                candidate_labels=["factual", "opinion", "uncertain"],
+                multi_label=False
+            )
+            confidence_scores.append(result["scores"][0])
+        
+        return np.mean(confidence_scores) if confidence_scores else 0.0
+    
+    def _calculate_structure_score(self, sentences: List) -> float:
+        """Calculate structure score for content"""
+        if not sentences:
+            return 0.0
+        
+        # Calculate various structure metrics
+        avg_length = np.mean([len(s) for s in sentences])
+        length_variance = np.var([len(s) for s in sentences])
+        
+        # Normalize scores
+        length_score = 1.0 - min(1.0, abs(avg_length - 15) / 15)
+        variance_score = 1.0 - min(1.0, length_variance / 100)
+        
+        return (length_score + variance_score) / 2
+    
+    def _calculate_clarity_score(self, sentences: List) -> float:
+        """Calculate clarity score for content"""
+        if not sentences:
+            return 0.0
+        
+        # Calculate clarity metrics
+        complex_sentences = sum(1 for s in sentences if len(s) > 20)
+        clarity_ratio = 1.0 - (complex_sentences / len(sentences))
+        
+        return clarity_ratio
+    
+    def _calculate_context_score(self, content: str) -> float:
+        """Calculate context score for content"""
+        # Use sentence transformer to analyze semantic coherence
+        sentences = [s.text for s in self.nlp(content).sents]
+        if not sentences:
+            return 0.0
+        
+        embeddings = self.transformer.encode(sentences)
+        similarities = []
+        
+        for i in range(len(embeddings) - 1):
+            similarity = np.dot(embeddings[i], embeddings[i + 1]) / (
+                np.linalg.norm(embeddings[i]) * np.linalg.norm(embeddings[i + 1])
+            )
+            similarities.append(similarity)
+        
+        return np.mean(similarities) if similarities else 0.0
+    
+    def _calculate_platform_score(self, doc) -> float:
+        """Calculate platform-specific optimization score"""
+        # Implement platform-specific scoring logic
+        return 0.0  # Placeholder
+    
+    def _calculate_natural_language_score(self, doc) -> float:
+        """Calculate natural language score for voice search"""
+        # Analyze natural language patterns
+        return 0.0  # Placeholder
+    
+    def _generate_platform_suggestions(self, doc) -> List[str]:
+        """Generate platform-specific optimization suggestions"""
+        suggestions = []
+        # Implement platform-specific suggestion generation
+        return suggestions
+    
+    def _calculate_score(self, metrics: Dict) -> int:
+        """Calculate overall optimization score"""
+        score = 100
+        
+        # Context clarity penalties
+        if metrics.get("context_clarity", {}).get("complex_sentence_ratio", 0) > 0.3:
+            score -= 10
+        
+        if metrics.get("context_clarity", {}).get("transition_density", 0) < 0.1:
+            score -= 5
+        
+        # Factual consistency penalties
+        if metrics.get("factual_consistency", {}).get("citation_count", 0) == 0:
+            score -= 10
+        
+        if metrics.get("factual_consistency", {}).get("statement_confidence", 0) < 0.7:
+            score -= 15
+        
+        # Platform-specific penalties
+        platform_metrics = metrics.get("platform_metrics", {})
+        for platform, platform_data in platform_metrics.items():
+            if platform == "chatgpt":
+                if platform_data.get("structure_score", 0) < 0.7:
+                    score -= 5
+                if platform_data.get("clarity_score", 0) < 0.7:
+                    score -= 5
+            elif platform == "voice":
+                if platform_data.get("natural_language_score", 0) < 0.7:
+                    score -= 10
+        
+        return max(0, min(100, score))
+    
+    def _generate_suggestions(self, metrics: Dict) -> List[str]:
+        """Generate optimization suggestions based on metrics"""
+        suggestions = []
+        
+        # Context clarity suggestions
+        if metrics.get("context_clarity", {}).get("complex_sentence_ratio", 0) > 0.3:
+            suggestions.append("Simplify complex sentences for better AI comprehension")
+        
+        if metrics.get("context_clarity", {}).get("transition_density", 0) < 0.1:
+            suggestions.append("Add more transition words to improve flow")
+        
+        # Factual consistency suggestions
+        if metrics.get("factual_consistency", {}).get("citation_count", 0) == 0:
+            suggestions.append("Add citations or references to support claims")
+        
+        if metrics.get("factual_consistency", {}).get("statement_confidence", 0) < 0.7:
+            suggestions.append("Review and strengthen factual statements")
+        
+        # Platform-specific suggestions
+        platform_metrics = metrics.get("platform_metrics", {})
+        for platform, platform_data in platform_metrics.items():
+            if platform == "chatgpt":
+                if platform_data.get("structure_score", 0) < 0.7:
+                    suggestions.append("Improve content structure for better ChatGPT comprehension")
+                if platform_data.get("clarity_score", 0) < 0.7:
+                    suggestions.append("Enhance content clarity for ChatGPT")
+            elif platform == "voice":
+                if platform_data.get("natural_language_score", 0) < 0.7:
+                    suggestions.append("Make content more conversational for voice search")
+        
+        return suggestions
+    
+    def _apply_optimizations(
+        self,
+        content: str,
+        suggestions: List[str],
+        target_platforms: List[str]
+    ) -> str:
+        """Apply optimizations to content based on suggestions"""
+        # This is a placeholder for actual content optimization
+        # In a real implementation, this would apply the suggestions
+        # to modify the content automatically
+        return content 
